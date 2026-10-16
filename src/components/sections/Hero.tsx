@@ -1,4 +1,5 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'motion/react';
 import { ArrowDown, Sparkles } from 'lucide-react';
 import { Silk } from '../reactbits/Silk.tsx';
@@ -14,15 +15,17 @@ interface HeroProps {
 }
 
 export const Hero: React.FC<HeroProps> = ({ content, contacts }) => {
+  const navigate = useNavigate();
   const handleScrollTo = (id: string) => {
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
+    if (id === 'explorar') {
+      document.getElementById('explorar')?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/' + id);
     }
   };
 
   return (
-    <section className="relative min-h-[92vh] sm:min-h-screen flex flex-col justify-between pt-32 pb-12 px-6 sm:px-12 md:px-16 overflow-hidden select-none bg-[#050506]">
+    <section className="relative min-h-[77vh] sm:min-h-[84vh] flex flex-col justify-between pt-32 pb-12 px-6 sm:px-12 md:px-16 overflow-hidden select-none bg-[#050506]">
       {/* Background WebGL Silk with deep obsidian black and champagne sheen */}
       <Silk className="z-0" speed={0.45} sheenIntensity={0.42} />
 
@@ -118,17 +121,17 @@ export const Hero: React.FC<HeroProps> = ({ content, contacts }) => {
         className="z-10 flex items-center justify-between w-full max-w-7xl mx-auto pt-6 border-t border-[rgba(242,238,232,0.06)]"
       >
         <button
-          onClick={() => handleScrollTo('portfolio')}
+          onClick={() => handleScrollTo('explorar')}
           className="group flex items-center gap-3 text-[#8E8982] hover:text-[#D4B679] transition-colors cursor-pointer"
         >
           <span className="text-[10px] uppercase tracking-[0.25em] font-inter">
-            Role para explorar
+            Escolha uma categoria
           </span>
           <ArrowDown className="w-3.5 h-3.5 group-hover:translate-y-1 transition-transform" />
         </button>
 
         <div className="flex items-center gap-4 text-[10px] text-[#8E8982] font-mono tracking-widest uppercase">
-          <span>[ 01 / 06 ]</span>
+          <span>[ 01 / 05 ]</span>
           <span className="hidden sm:inline opacity-40">•</span>
           <span className="hidden sm:inline">@byrobsonbrito</span>
         </div>

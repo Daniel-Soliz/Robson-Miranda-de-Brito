@@ -147,6 +147,20 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       return;
     }
 
+    // Nesta prévia, sem WhatsApp oficial e sem backend, não criar reservas reais.
+    if (!contacts.whatsapp) {
+      const serviceName = services.find(service => service.id === selectedServiceId)?.name || 'Ensaio fotográfico';
+      const draft = `Olá, Robson! Gostaria de consultar uma data pelo site de demonstração.\nServiço: ${serviceName}\nData: ${formatDatePTBR(selectedDate)} às ${selectedSlot}\nNome: ${clientName}\nWhatsApp: ${clientWhatsApp}\nE-mail: ${clientEmail}\nLocal: ${locationCity}\nObservações: ${message}`;
+      if (navigator.clipboard?.writeText) {
+        void navigator.clipboard.writeText(draft).catch(() => window.prompt('Copie a mensagem para enviar no Direct:', draft));
+      } else {
+        window.prompt('Copie a mensagem para enviar no Direct:', draft);
+      }
+      window.open('https://www.instagram.com/byrobsonbrito/', '_blank', 'noopener,noreferrer');
+      setIsSuccess(true);
+      return;
+    }
+
     setIsSubmitting(true);
 
     try {
@@ -173,7 +187,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
       setSubmissionCount(prev => prev + 1);
 
       const waUrl = generateClientWhatsAppUrl({
-        phone: contacts.whatsapp || '5511987654321',
+        phone: contacts.whatsapp,
         clientName: newBooking.clientName,
         clientWhatsApp: newBooking.clientWhatsApp,
         clientEmail: newBooking.clientEmail,
@@ -212,7 +226,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
             Agende Sua <span className="italic font-normal text-[#D4B679]">Sessão</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-[#8E8982] font-inter font-light">
-            Escolha o serviço desejado, confira os dias livres e reserve seu horário. Entramos em contato em até 24 horas para alinhar os detalhes.
+            Simule sua data e prepare uma mensagem para consulta. A disponibilidade e os serviços precisam ser confirmados diretamente com o fotógrafo.
           </p>
         </div>
 
@@ -226,15 +240,15 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
               <CheckCircle2 className="w-8 h-8" />
             </div>
 
-            <span className="label-editorial text-[10px] block">PEDIDO ENVIADO COM SUCESSO</span>
+            <span className="label-editorial text-[10px] block">{contacts.whatsapp ? 'PEDIDO PREPARADO' : 'PRÉVIA DE AGENDAMENTO'}</span>
 
             <h3 className="font-cormorant text-3xl sm:text-4xl text-[#FAF7F2] font-light italic">
-              Pedido recebido!
+              {contacts.whatsapp ? 'Solicitação registrada!' : 'Sua mensagem está pronta!'}
             </h3>
 
             <p className="text-[#8E8982] text-sm sm:text-base font-inter leading-relaxed">
               Obrigado pelo carinho e interesse no meu olhar, <strong className="text-[#FAF7F2]">{clientName}</strong>. 
-              O Robson confirma a sua reserva pelo WhatsApp em até 24 horas úteis.
+              {contacts.whatsapp ? 'O pedido foi preparado para envio pelo WhatsApp. Confirme a mensagem no aplicativo.' : 'Esta é apenas uma simulação. Cole o texto no Direct do Instagram para consultar a disponibilidade com o Robson.'}
             </p>
 
             <div className="bg-[#050506] border border-[rgba(242,238,232,0.08)] p-4 rounded-[2px] text-left text-xs space-y-1.5 font-inter">
@@ -251,8 +265,8 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href={generateClientWhatsAppUrl({
-                  phone: contacts.whatsapp || '5511987654321',
+                href={contacts.whatsapp ? generateClientWhatsAppUrl({
+                  phone: contacts.whatsapp,
                   clientName,
                   clientWhatsApp,
                   clientEmail,
@@ -261,12 +275,12 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                   timeSlot: selectedSlot,
                   locationCity,
                   message,
-                })}
+                }) : 'https://www.instagram.com/byrobsonbrito/'}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto px-6 py-3 bg-[#D4B679] text-[#050506] font-inter text-xs uppercase tracking-widest font-medium rounded-[2px] hover:bg-[#e0c793] transition-colors"
               >
-                Abrir WhatsApp novamente
+                {contacts.whatsapp ? 'Abrir WhatsApp novamente' : 'Abrir Instagram do Robson'}
               </a>
               <button
                 onClick={() => {
@@ -575,7 +589,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                   className="w-full py-3.5 bg-[#D4B679] text-[#050506] text-xs uppercase tracking-[0.2em] font-medium font-inter rounded-[2px] hover:bg-[#e0c793] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-md"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>{isSubmitting ? 'Enviando...' : 'Enviar Pedido & Abrir WhatsApp'}</span>
+                  <span>{isSubmitting ? 'Enviando...' : '{contacts.whatsapp ? 'Enviar pedido & abrir WhatsApp' : 'Preparar pedido & abrir Instagram'}'}</span>
                 </button>
               </form>
 

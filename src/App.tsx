@@ -10,6 +10,9 @@ export default function App() {
     <BrowserRouter basename={import.meta.env.BASE_URL}>
       <Routes>
         <Route path="/" element={<Home />} />
+        {['portfolio', 'servicos', 'sobre', 'agenda', 'contato'].map(path => (
+          <Route key={path} path={`/${path}`} element={<Home />} />
+        ))}
         <Route path="/links" element={<LinksPage />} />
         <Route path="/admin" element={<AdminPage />} />
         <Route path="*" element={<NotFound />} />

@@ -132,7 +132,7 @@ export const LinksPage: React.FC = () => {
         )}
 
         <a
-          href={`${import.meta.env.BASE_URL}#agenda`}
+          href={`${import.meta.env.BASE_URL}agenda`}
           className="w-full py-3.5 px-6 rounded-[2px] bg-[#0B0B0E] border border-[rgba(212,182,121,0.25)] text-[#FAF7F2] flex items-center justify-between font-inter text-xs sm:text-sm uppercase tracking-wider hover:border-[#D4B679] hover:text-[#D4B679] transition-all group"
         >
           <div className="flex items-center gap-3">
@@ -143,7 +143,7 @@ export const LinksPage: React.FC = () => {
         </a>
 
         <a
-          href={`${import.meta.env.BASE_URL}#portfolio`}
+          href={`${import.meta.env.BASE_URL}portfolio`}
           className="w-full py-3.5 px-6 rounded-[2px] bg-[#0B0B0E] border border-[rgba(242,238,232,0.08)] text-[#FAF7F2] flex items-center justify-between font-inter text-xs sm:text-sm uppercase tracking-wider hover:border-[rgba(212,182,121,0.4)] hover:text-[#D4B679] transition-all group"
         >
           <div className="flex items-center gap-3">
@@ -154,7 +154,7 @@ export const LinksPage: React.FC = () => {
         </a>
 
         <a
-          href={`${import.meta.env.BASE_URL}#servicos`}
+          href={`${import.meta.env.BASE_URL}servicos`}
           className="w-full py-3.5 px-6 rounded-[2px] bg-[#0B0B0E] border border-[rgba(242,238,232,0.08)] text-[#FAF7F2] flex items-center justify-between font-inter text-xs sm:text-sm uppercase tracking-wider hover:border-[rgba(212,182,121,0.4)] hover:text-[#D4B679] transition-all group"
         >
           <div className="flex items-center gap-3">

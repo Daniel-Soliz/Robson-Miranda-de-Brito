@@ -4,9 +4,10 @@ import { ContactSettings } from '../../data/types.ts';
 
 interface FooterProps {
   contacts: ContactSettings;
+  compact?: boolean;
 }
 
-export const Footer: React.FC<FooterProps> = ({ contacts }) => {
+export const Footer: React.FC<FooterProps> = ({ contacts, compact = false }) => {
   const currentYear = new Date().getFullYear();
 
   const scrollToTop = () => {
@@ -14,10 +15,10 @@ export const Footer: React.FC<FooterProps> = ({ contacts }) => {
   };
 
   return (
-    <footer className="pt-24 pb-12 px-5vw bg-[#030304] border-t border-[rgba(242,238,232,0.06)] relative overflow-hidden select-none">
-      <div className="max-w-7xl mx-auto space-y-16">
+    <footer className={`${compact ? 'pt-10 pb-7' : 'pt-16 pb-10'} px-5vw bg-[#030304] border-t border-[rgba(242,238,232,0.06)] relative overflow-hidden select-none`}>
+      <div className="max-w-7xl mx-auto space-y-10">
         {/* Giant Monolithic Name: ROBSON BRITO */}
-        <div className="text-center overflow-hidden">
+        <div className={compact ? 'hidden' : 'text-center overflow-hidden'}>
           <h2
             className="font-cormorant font-light text-[#FAF7F2] uppercase tracking-[-0.03em] transition-all"
             style={{
@@ -30,7 +31,7 @@ export const Footer: React.FC<FooterProps> = ({ contacts }) => {
           <div className="flex items-center justify-center gap-2 mt-4">
             <span className="w-1 h-1 rounded-full bg-[#D4B679]" />
             <span className="label-editorial text-[9px] sm:text-[10px] text-[#D4B679]">
-              CASAMENTOS & RETRATOS AUTORAIS • SÃO PAULO & DESTINATIONS
+              FOTOGRAFIA AUTORAL • PRÉVIA EM DESENVOLVIMENTO
             </span>
             <span className="w-1 h-1 rounded-full bg-[#D4B679]" />
           </div>
@@ -118,10 +119,10 @@ export const Footer: React.FC<FooterProps> = ({ contacts }) => {
             <a href={`${import.meta.env.BASE_URL}admin`} className="hover:text-[#D4B679] transition-colors">
               Painel
             </a>
-            <a href="#portfolio" className="hover:text-[#D4B679] transition-colors">
+            <a href={`${import.meta.env.BASE_URL}portfolio`} className="hover:text-[#D4B679] transition-colors">
               Galeria
             </a>
-            <a href="#agenda" className="hover:text-[#D4B679] transition-colors">
+            <a href={`${import.meta.env.BASE_URL}agenda`} className="hover:text-[#D4B679] transition-colors">
               Agenda
             </a>
           </div>

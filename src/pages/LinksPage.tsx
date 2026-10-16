@@ -62,7 +62,7 @@ export const LinksPage: React.FC = () => {
       {/* Top Bar with back to site and share */}
       <div className="w-full max-w-md flex items-center justify-between mb-8 z-10">
         <a
-          href="/"
+          href={import.meta.env.BASE_URL}
           className="flex items-center gap-1.5 text-xs text-[#8E8982] hover:text-[#D4B679] transition-colors font-inter uppercase tracking-wider"
         >
           <ArrowLeft className="w-4 h-4" />
@@ -103,6 +103,17 @@ export const LinksPage: React.FC = () => {
 
       {/* Big Action Buttons */}
       <div className="w-full max-w-md space-y-3 z-10">
+        {!contacts.whatsapp && (
+          <a
+            href="https://www.instagram.com/byrobsonbrito/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="w-full py-4 px-6 rounded-[2px] bg-[#D4B679] text-[#050506] flex items-center justify-between font-inter font-medium text-xs sm:text-sm uppercase tracking-wider hover:bg-[#e0c793] transition-all shadow-xl group"
+          >
+            <span>Conversar com Robson no Instagram</span>
+            <ExternalLink className="w-4 h-4" />
+          </a>
+        )}
         {contacts.whatsapp && (
           <a
             href={`https://wa.me/${contacts.whatsapp}?text=${encodeURIComponent(
@@ -121,7 +132,7 @@ export const LinksPage: React.FC = () => {
         )}
 
         <a
-          href="/#agenda"
+          href={`${import.meta.env.BASE_URL}#agenda`}
           className="w-full py-3.5 px-6 rounded-[2px] bg-[#0B0B0E] border border-[rgba(212,182,121,0.25)] text-[#FAF7F2] flex items-center justify-between font-inter text-xs sm:text-sm uppercase tracking-wider hover:border-[#D4B679] hover:text-[#D4B679] transition-all group"
         >
           <div className="flex items-center gap-3">
@@ -132,7 +143,7 @@ export const LinksPage: React.FC = () => {
         </a>
 
         <a
-          href="/#portfolio"
+          href={`${import.meta.env.BASE_URL}#portfolio`}
           className="w-full py-3.5 px-6 rounded-[2px] bg-[#0B0B0E] border border-[rgba(242,238,232,0.08)] text-[#FAF7F2] flex items-center justify-between font-inter text-xs sm:text-sm uppercase tracking-wider hover:border-[rgba(212,182,121,0.4)] hover:text-[#D4B679] transition-all group"
         >
           <div className="flex items-center gap-3">
@@ -143,7 +154,7 @@ export const LinksPage: React.FC = () => {
         </a>
 
         <a
-          href="/#servicos"
+          href={`${import.meta.env.BASE_URL}#servicos`}
           className="w-full py-3.5 px-6 rounded-[2px] bg-[#0B0B0E] border border-[rgba(242,238,232,0.08)] text-[#FAF7F2] flex items-center justify-between font-inter text-xs sm:text-sm uppercase tracking-wider hover:border-[rgba(212,182,121,0.4)] hover:text-[#D4B679] transition-all group"
         >
           <div className="flex items-center gap-3">

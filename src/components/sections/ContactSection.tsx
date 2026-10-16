@@ -37,7 +37,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     e.preventDefault();
     if (!name || !whatsapp) return;
 
-    const phone = normalizePhoneNumber(contacts.whatsapp);
+    const phone = normalizePhoneNumber(contacts.whatsapp ?? '');
     const text = `Olá Robson!\n\n*Solicitação de Orçamento pelo Site*\n• *Nome:* ${name}\n• *WhatsApp:* ${whatsapp}\n• *E-mail:* ${email || 'Não informado'}\n• *Assunto/Serviço:* ${subject || 'Geral'}\n• *Mensagem:* ${message || 'Gostaria de receber a apresentação e valores.'}`;
 
     if (phone) {

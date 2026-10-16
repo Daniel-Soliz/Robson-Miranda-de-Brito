@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: read
+  actions: read
   pages: write
   id-token: write
 
@@ -33,9 +34,47 @@ jobs:
         run: |
           npm run build
           cp dist/index.html dist/404.html
+      - name: Aguardar publicação automática da branch
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # Se Pages usa 'Deploy from a branch', Jekyll publica o fonte bruto.
+          # O build Vite deve ser a ULTIMA publicação (caso contrário: tela branca).
+          for attempt in $(seq 1 48); do
+            status="$(gh api "repos/$GITHUB_REPOSITORY/actions/runs?head_sha=$GITHUB_SHA&per_page=100" \
+              --jq '.workflow_runs | map(select(.name == "pages build and deployment" and .event == "dynamic")) | .[0].status // "not-found"')"
+            echo "Publicação Jekyll: $status ($attempt)"
+            if [ "$status" = "completed" ]; then
+              echo "Jekyll terminou; publicando agora o Vite compilado."
+              break
+            fi
+            if [ "$status" = "not-found" ] && [ "$attempt" -ge 8 ]; then
+              echo "Nenhuma publicação Jekyll; seguindo com GitHub Actions."
+              break
+            fi
+            if [ "$attempt" -eq 48 ]; then
+              echo "::error::A publicação Jekyll não terminou a tempo."
+              exit 1
+            fi
+            sleep 10
+          done
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
       - id: deployment
         uses: actions/deploy-pages@v4
+      - name: Conferir se a URL pública entrega o site compilado
+        run: |
+          url="https://daniel-soliz.github.io/Robson-Miranda-de-Brito/?check=${GITHUB_SHA}"
+          for attempt in $(seq 1 12); do
+            html="$(curl -fsSL --max-time 20 "$url" || true)"
+            if [[ "$html" == *"/Robson-Miranda-de-Brito/assets/"* ]] && [[ "$html" != *"/src/main.tsx"* ]]; then
+              echo "A URL pública está servindo o HTML compilado pelo Vite."
+              exit 0
+            fi
+            echo "Aguardando atualização do CDN ($attempt/12)..."
+            sleep 10
+          done
+          echo "::error::A URL ainda mostra index.html original, sem compilação."
+          exit 1

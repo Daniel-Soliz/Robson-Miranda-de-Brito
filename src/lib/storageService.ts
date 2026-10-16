@@ -36,7 +36,7 @@ import {
   deleteObject,
 } from 'firebase/storage';
 
-const LS_PREFIX = 'byrobsonbrito_v2_';
+const LS_PREFIX = 'byrobsonbrito_v3_';
 
 function getLocal<T>(key: string, fallback: T): T {
   try {

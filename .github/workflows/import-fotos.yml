@@ -1,0 +1,53 @@
+name: Importar fotos da demonstração
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/import-fotos.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Salvar fotos diretamente no repositório
+        run: |
+          set -euo pipefail
+          mkdir -p public/portfolio
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/0b7a49b5-2970-4890-9a5e-922909bc7e10.png' -o 'public/portfolio/paisagem.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/1804bdc3-d812-43e6-81da-55afa4da9cd1.png' -o 'public/portfolio/vestido-azul.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/202ae52a-b808-4cf9-87ce-f1e795d79695.png' -o 'public/portfolio/crianca-familia.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/4a7caed4-df94-4f0c-84ea-063dae4409f2.png' -o 'public/portfolio/atleta.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/ecd1b50b-8eba-40ce-8c87-71527a789c40.png' -o 'public/portfolio/pintura-facial.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/a9399953-14d2-4238-abf5-f96ef5b11df1.png' -o 'public/portfolio/festa-selfie.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/3fa026e1-9e51-4c75-a333-01fded950403.png' -o 'public/portfolio/mae-crianca.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/b0aa6723-658a-474f-8900-4bd0ae1ce23d.png' -o 'public/portfolio/familia-bolo.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/bd660cc1-08d8-4c07-a3cb-608cf72964f7.png' -o 'public/portfolio/robson-retrato.png'
+          curl -fsSL --retry 4 --retry-delay 3 --connect-timeout 20 --max-time 120 'https://d2ol7oe51mr4n9.cloudfront.net/user_3JcQfxW1tGShkWXbUXZE50F6Dyk/52eedf48-689a-480f-8b13-f73c9dfa8ab4.png' -o 'public/portfolio/robson-paris.png'
+          for photo in paisagem vestido-azul crianca-familia atleta pintura-facial festa-selfie mae-crianca familia-bolo robson-retrato robson-paris; do
+            test "$(file --brief --mime-type "public/portfolio/${photo}.png")" = 'image/png'
+            test "$(wc -c < "public/portfolio/${photo}.png")" -gt 10000
+          done
+          git add public/portfolio/{paisagem,vestido-azul,crianca-familia,atleta,pintura-facial,festa-selfie,mae-crianca,familia-bolo,robson-retrato,robson-paris}.png
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --cached --quiet; then
+            echo 'Fotografias já estão no repositório.'
+          else
+            git commit -m 'assets: adiciona dez fotografias reais ao portfólio de Robson'
+            git push origin HEAD:main
+          fi
+      - name: Publicar versão com as fotos
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh workflow run pages.yml --ref main

@@ -14,12 +14,26 @@ export const FullGallery: React.FC<FullGalleryProps> = ({
   onSelectPhoto,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string>('todos');
+  const [page, setPage] = useState(1);
+  const pageSize = 6;
+  const selectCategory = (category: string) => {
+    setSelectedCategory(category);
+    setPage(1);
+  };
 
   const visiblePhotos = photos.filter(p => p.visible);
 
   const filteredPhotos = selectedCategory === 'todos'
     ? visiblePhotos
     : visiblePhotos.filter(p => p.category.toLowerCase() === selectedCategory.toLowerCase());
+
+  const totalPages = Math.max(1, Math.ceil(filteredPhotos.length / pageSize));
+  const currentPage = Math.min(page, totalPages);
+  const displayedPhotos = filteredPhotos.slice((currentPage - 1) * pageSize, currentPage * pageSize);
+  const goToPage = (target: number) => {
+    setPage(Math.max(1, Math.min(totalPages, target)));
+    document.getElementById('portfolio')?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section id="portfolio" className="py-24 sm:py-32 px-5vw bg-[#050506] relative select-none">
@@ -38,7 +52,8 @@ export const FullGallery: React.FC<FullGalleryProps> = ({
           {/* Dynamic Category Tabs */}
           <div className="flex flex-wrap items-center gap-2 sm:gap-2.5">
             <button
-              onClick={() => setSelectedCategory('todos')}
+              onClick={() => selectCategory('todos')}
+              aria-pressed={selectedCategory === 'todos'}
               className={`px-4 py-1.5 rounded-full font-inter text-[11px] uppercase tracking-[0.18em] transition-all cursor-pointer ${
                 selectedCategory === 'todos'
                   ? 'bg-[#D4B679] text-[#050506] font-medium shadow-md'
@@ -56,7 +71,8 @@ export const FullGallery: React.FC<FullGalleryProps> = ({
               return (
                 <button
                   key={cat.id}
-                  onClick={() => setSelectedCategory(cat.slug)}
+                  onClick={() => selectCategory(cat.slug)}
+                  aria-pressed={selectedCategory === cat.slug}
                   className={`px-4 py-1.5 rounded-full font-inter text-[11px] uppercase tracking-[0.18em] transition-all cursor-pointer ${
                     selectedCategory.toLowerCase() === cat.slug.toLowerCase()
                       ? 'bg-[#D4B679] text-[#050506] font-medium shadow-md'
@@ -71,7 +87,23 @@ export const FullGallery: React.FC<FullGalleryProps> = ({
         </div>
 
         {/* Masonry Grid */}
-        <Masonry photos={filteredPhotos} onSelectPhoto={onSelectPhoto} />
+        <Masonry photos={displayedPhotos} onSelectPhoto={onSelectPhoto} />
+
+        {totalPages > 1 && (
+          <nav aria-label="Páginas do portfólio" className="flex items-center justify-center gap-4 sm:gap-8 mt-12 pt-8 border-t border-[#F2EEE8]/10">
+            <button type="button" disabled={currentPage === 1} onClick={() => goToPage(currentPage - 1)}
+              className="px-4 py-2.5 border border-[#D4B679]/35 text-[#D4B679] text-xs uppercase tracking-widest disabled:opacity-30 hover:border-[#D4B679] transition-colors">
+              ← Anterior
+            </button>
+            <span aria-live="polite" className="font-mono text-xs text-[#FAF7F2] whitespace-nowrap">
+              {currentPage} / {totalPages}
+            </span>
+            <button type="button" disabled={currentPage === totalPages} onClick={() => goToPage(currentPage + 1)}
+              className="px-4 py-2.5 border border-[#D4B679]/35 text-[#D4B679] text-xs uppercase tracking-widest disabled:opacity-30 hover:border-[#D4B679] transition-colors">
+              Próxima →
+            </button>
+          </nav>
+        )}
 
         {filteredPhotos.length === 0 && (
           <div className="text-center py-16 border border-dashed border-[rgba(242,238,232,0.08)] rounded-[2px] bg-[#0A0A0D]">

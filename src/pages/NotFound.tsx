@@ -12,7 +12,7 @@ export const NotFound: React.FC = () => {
         O endereço solicitado não existe ou foi transferido para uma nova locação no portfólio.
       </p>
       <a
-        href="/"
+        href={import.meta.env.BASE_URL}
         className="inline-flex items-center gap-2 px-7 py-3.5 rounded-[2px] bg-[#C8A96A] text-[#0B0B0C] font-inter text-xs uppercase tracking-widest font-medium hover:bg-[#d9bc7f] transition-colors"
       >
         <ArrowLeft className="w-4 h-4" />

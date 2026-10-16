@@ -46,7 +46,7 @@ function getLocal<T>(key: string, fallback: T): T {
     
     // Auto-migrate from SVG placeholders to curated photos if needed
     if (key === 'photos' && Array.isArray(parsed) && parsed.length > 0) {
-      if (typeof parsed[0]?.src === 'string' && parsed[0].src.startsWith('data:image/svg')) {
+      if (typeof parsed[0]?.src === 'string' && (parsed[0].src.startsWith('data:image/svg') || parsed[0].src.includes('images.unsplash.com'))) {
         return fallback;
       }
     }
@@ -84,7 +84,7 @@ export const dataService = {
       }
     }
     const local = getLocal<Photo[]>('photos', DEFAULT_PHOTOS);
-    if (local.length > 0 && local[0].src.startsWith('data:image/svg')) {
+    if (local.length > 0 && (local[0].src.startsWith('data:image/svg') || local[0].src.includes('images.unsplash.com'))) {
       return DEFAULT_PHOTOS;
     }
     return local;

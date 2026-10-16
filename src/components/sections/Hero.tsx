@@ -44,11 +44,11 @@ export const Hero: React.FC<HeroProps> = ({ content, contacts }) => {
         <div className="flex items-center gap-2">
           <span className="w-1 h-1 rounded-full bg-[#D4B679]" />
           <span className="label-editorial text-[9px] sm:text-[10px] text-[#D4B679]">
-            FOTOGRAFIA AUTORAL & CINEMATOGRÁFICA
+            FOTOGRAFIA & NARRATIVAS VISUAIS
           </span>
         </div>
         <span className="text-[10px] text-[#8E8982] font-mono tracking-widest uppercase hidden sm:block">
-          {contacts.city || 'São Paulo & Destination'}
+          {contacts.city || 'Atendimento sob consulta'}
         </span>
       </motion.div>
 
@@ -62,7 +62,7 @@ export const Hero: React.FC<HeroProps> = ({ content, contacts }) => {
             letterSpacing: '-0.025em',
           }}
         >
-          <SplitText text="Momentos que&nbsp;o" delay={0.2} duration={0.8} />{' '}
+          <SplitText text="Momentos que o" delay={0.2} duration={0.8} />{' '}
           <ShinyText text="tempo" className="font-light" />
           <br />
           <SplitText text="não leva" delay={0.5} duration={0.8} />

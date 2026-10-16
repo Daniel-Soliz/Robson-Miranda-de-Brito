@@ -48,7 +48,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   loading="lazy"
                   decoding="async"
                   onError={(e) => {
-                    (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80';
+                    (e.currentTarget as HTMLImageElement).src = `${import.meta.env.BASE_URL}portfolio/media_1792172899210_cf344471.png`;
                   }}
                   className="w-full h-full object-cover photo-zoom filter brightness-95"
                 />
@@ -81,7 +81,7 @@ export const ServicesSection: React.FC<ServicesSectionProps> = ({
                   {/* Included Items Checklist */}
                   <div className="space-y-2.5 mb-8">
                     <span className="text-[9px] uppercase tracking-[0.2em] text-[#8E8982] block font-inter">
-                      O que está incluso:
+                      Possibilidades do pacote (a confirmar):
                     </span>
                     <ul className="space-y-2">
                       {service.includedItems.map((item, idx) => (

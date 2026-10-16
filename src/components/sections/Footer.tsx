@@ -111,11 +111,11 @@ export const Footer: React.FC<FooterProps> = ({ contacts }) => {
 
           {/* Quick Navigation */}
           <div className="flex items-center justify-center gap-6 text-xs text-[#8E8982] font-inter">
-            <a href="/links" className="hover:text-[#D4B679] transition-colors flex items-center gap-1">
+            <a href={`${import.meta.env.BASE_URL}links`} className="hover:text-[#D4B679] transition-colors flex items-center gap-1">
               <span>Bio /links</span>
               <ExternalLink className="w-3 h-3 opacity-50" />
             </a>
-            <a href="/admin" className="hover:text-[#D4B679] transition-colors">
+            <a href={`${import.meta.env.BASE_URL}admin`} className="hover:text-[#D4B679] transition-colors">
               Painel
             </a>
             <a href="#portfolio" className="hover:text-[#D4B679] transition-colors">
@@ -146,6 +146,7 @@ export const Footer: React.FC<FooterProps> = ({ contacts }) => {
           <p className="tracking-widest uppercase text-[9px] font-mono">LUZ • ALMA • TEMPO</p>
         </div>
       </div>
+      <p className="text-center text-[11px] text-[#8E8982] px-5 pb-5">Prévia de apresentação. Fotos do acervo do projeto; pacotes, disponibilidade e contatos sujeitos à confirmação.</p>
     </footer>
   );
 };

@@ -595,7 +595,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
 
               <div className="mt-4 pt-4 border-t border-[rgba(242,238,232,0.06)] flex items-center justify-center gap-2 text-[11px] text-[#8E8982] font-inter">
                 <ShieldCheck className="w-3.5 h-3.5 text-[#D4B679]" />
-                <span>Horário fica pré-reservado até confirmação direta</span>
+                <span>{contacts.whatsapp ? 'Pedido sujeito à confirmação do fotógrafo' : 'Agenda ilustrativa: nenhuma reserva é realizada nesta prévia'}</span>
               </div>
             </div>
           </div>

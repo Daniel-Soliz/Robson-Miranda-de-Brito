@@ -168,7 +168,7 @@ export const Home: React.FC = () => {
         </main>
       )}
 
-      <Footer contacts={contacts} />
+      <Footer contacts={contacts} compact={section !== 'inicio'} />
       <FloatingWhatsApp contacts={contacts} />
       <Lightbox
         photos={photos.filter(photo => photo.visible)}

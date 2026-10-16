@@ -37,12 +37,21 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
     e.preventDefault();
     if (!name || !whatsapp) return;
 
-    const phone = normalizePhoneNumber(contacts.whatsapp || '5511987654321');
+    const phone = normalizePhoneNumber(contacts.whatsapp);
     const text = `Olá Robson!\n\n*Solicitação de Orçamento pelo Site*\n• *Nome:* ${name}\n• *WhatsApp:* ${whatsapp}\n• *E-mail:* ${email || 'Não informado'}\n• *Assunto/Serviço:* ${subject || 'Geral'}\n• *Mensagem:* ${message || 'Gostaria de receber a apresentação e valores.'}`;
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
+    if (phone) {
+      window.open(`https://wa.me/${phone}?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+    } else {
+      // No official WhatsApp number was provided. Keep the draft for Instagram Direct.
+      if (navigator.clipboard?.writeText) {
+        void navigator.clipboard.writeText(text).catch(() => window.prompt('Copie a mensagem para enviar no Direct:', text));
+      } else {
+        window.prompt('Copie a mensagem para enviar no Direct:', text);
+      }
+      window.open('https://www.instagram.com/byrobsonbrito/', '_blank', 'noopener,noreferrer');
+    }
     setSubmitted(true);
-    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -164,10 +173,10 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
               <div className="text-center py-12 space-y-4">
                 <CheckCircle2 className="w-12 h-12 text-[#D4B679] mx-auto" />
                 <h3 className="font-cormorant text-3xl text-[#FAF7F2] italic">
-                  Mensagem transmitida!
+                  Mensagem preparada!
                 </h3>
                 <p className="text-sm text-[#8E8982] font-inter max-w-md mx-auto">
-                  A conversa foi iniciada pelo WhatsApp. Robson entrará em contato em breve.
+                  {contacts.whatsapp ? 'O WhatsApp foi aberto com seu pedido. Confira o envio da mensagem.' : 'A página do Instagram foi aberta. Cole a mensagem no Direct para enviá-la; nenhum pedido é enviado automaticamente nesta prévia.'}
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
@@ -258,7 +267,7 @@ export const ContactSection: React.FC<ContactSectionProps> = ({
                   className="w-full py-3.5 bg-[#D4B679] text-[#050506] text-xs uppercase tracking-[0.2em] font-medium font-inter rounded-[2px] hover:bg-[#e0c793] transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>Enviar Mensagem via WhatsApp</span>
+                  <span>{contacts.whatsapp ? 'Preparar mensagem via WhatsApp' : 'Preparar mensagem no Instagram'}</span>
                 </button>
               </form>
             )}

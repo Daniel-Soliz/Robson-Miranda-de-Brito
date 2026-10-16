@@ -1,0 +1,6 @@
+{
+  "name": "Robson Brito Fotografia",
+  "description": "Portfólio e painel administrativo autoral de fotografia de casamentos e ensaios por Robson Brito (@byrobsonbrito).",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -517,13 +517,10 @@ export const DEFAULT_CONTACTS: ContactSettings = {
   address: '',
   city: 'Atendimento e local a combinar',
   googleMapsUrl: '',
-  workingHoursText: 'Segunda a Sábado, das 09h às 19h (atendimento sob hora marcada)',
+  workingHoursText: 'Horários e disponibilidade sob consulta',
   defaultWhatsappMsg: 'Olá Robson! Conheci seu trabalho pelo site e gostaria de conversar sobre uma data especial.',
   bioLinks: [
-    { id: 'l1', title: 'Falar direto no WhatsApp', url: 'https://wa.me/5511987654321', highlight: true, order: 1 },
-    { id: 'l2', title: 'Agendar sessão online', url: '/#agenda', highlight: false, order: 2 },
-    { id: 'l3', title: 'Explorar portfólio completo', url: '/#portfolio', highlight: false, order: 3 },
-    { id: 'l4', title: 'Conhecer valores e serviços', url: '/#servicos', highlight: false, order: 4 },
+    { id: 'instagram-oficial', title: 'Instagram @byrobsonbrito', url: 'https://www.instagram.com/byrobsonbrito/', highlight: true, order: 1 },
   ],
 };
 

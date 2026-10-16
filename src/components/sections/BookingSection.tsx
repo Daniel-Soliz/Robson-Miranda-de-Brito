@@ -589,7 +589,7 @@ export const BookingSection: React.FC<BookingSectionProps> = ({
                   className="w-full py-3.5 bg-[#D4B679] text-[#050506] text-xs uppercase tracking-[0.2em] font-medium font-inter rounded-[2px] hover:bg-[#e0c793] transition-all flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50 shadow-md"
                 >
                   <Send className="w-3.5 h-3.5" />
-                  <span>{isSubmitting ? 'Enviando...' : '{contacts.whatsapp ? 'Enviar pedido & abrir WhatsApp' : 'Preparar pedido & abrir Instagram'}'}</span>
+                  <span>{isSubmitting ? 'Preparando...' : (contacts.whatsapp ? 'Enviar pedido & abrir WhatsApp' : 'Preparar pedido & abrir Instagram')}</span>
                 </button>
               </form>
 

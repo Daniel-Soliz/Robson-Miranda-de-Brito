@@ -87,3 +87,22 @@ O painel foi desenhado especificamente para funcionar de forma leve e rápida na
 4. No campo título, coloque:
    `Orçamentos & Portfólio • Robson Brito`
 5. Salve! Seus seguidores terão acesso imediato aos botões elegantes de WhatsApp, agendamento de sessões e portfólio completo.
+
+---
+
+## Prévia para aprovação do cliente (outubro de 2026)
+
+- O site é um **modelo demonstrativo**, não um site já contratado/validado pelo profissional.
+- Os 24 arquivos `public/portfolio/*.png` vieram do acervo já existente neste repositório; **não foi possível verificar ou importar publicações diretamente do Instagram**, pois o acesso foi bloqueado. Confira a autoria e obtenha autorização antes de publicar comercialmente.
+- Preços, chave Pix, endereço, telefone e WhatsApp fictícios foram removidos da configuração inicial; serviços, fotos, textos, horários e perfil devem ser aprovados pelo Robson.
+- Sem número oficial de WhatsApp, os formulários preparam o texto para o usuário copiar e abrem o Instagram do profissional. A simulação do calendário **não envia nem confirma reserva real**.
+- Sem Firebase configurado, a edição feita no painel fica no armazenamento **local do navegador**, não é compartilhada entre dispositivos.
+
+### Publicar a prévia no GitHub Pages
+
+1. Abra **Settings → Pages** no repositório e configure a origem em **GitHub Actions**.
+2. Faça merge da branch de prévia em `main` após a aprovação dos testes.
+3. O workflow `.github/workflows/pages.yml` compila e publica em `https://daniel-soliz.github.io/Robson-Miranda-de-Brito/` quando a configuração do Pages permitir.
+4. Após a publicação, confira a rota principal, galeria, `/links`, `/admin`, formulários e navegação em celular.
+
+**Para virar um site de produção:** confirmar as imagens e informações reais do cliente, configurar Firebase e credenciais seguras, ativar domínio e revisar a integração de agendamentos.

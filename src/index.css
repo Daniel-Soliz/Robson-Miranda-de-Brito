@@ -112,3 +112,29 @@
 .glow-champagne {
   box-shadow: 0 0 40px -8px rgba(200, 169, 106, 0.15);
 }
+
+
+/* Respiro lateral consistente em celulares, tablets e desktop. */
+.px-5vw { padding-inline: clamp(1.25rem, 5vw, 5rem); }
+html { scroll-padding-top: 6rem; }
+[id] { scroll-margin-top: 6rem; }
+#root { min-width: 0; overflow-x: clip; }
+img { max-width: 100%; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid #D4B679;
+  outline-offset: 3px;
+}
+@media (max-width: 640px) {
+  input, textarea, select { font-size: 16px !important; }
+  .label-editorial { letter-spacing: 0.13em; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

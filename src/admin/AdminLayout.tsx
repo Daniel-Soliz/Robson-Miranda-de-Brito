@@ -88,7 +88,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ userEmail, onLogout })
   }, []);
 
   const handleCopyBioLink = async () => {
-    const url = `${window.location.origin}/links`;
+    const url = `${window.location.origin}${import.meta.env.BASE_URL}links`;
     try {
       await navigator.clipboard.writeText(url);
       setCopiedLink(true);
@@ -143,7 +143,7 @@ export const AdminLayout: React.FC<AdminLayoutProps> = ({ userEmail, onLogout })
             </button>
 
             <a
-              href="/"
+              href={import.meta.env.BASE_URL}
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1.5 rounded-[2px] bg-[#0E0E12] border border-[rgba(242,238,232,0.08)] text-[#FAF7F2] hover:text-[#D4B679] hover:border-[#D4B679] transition-colors text-xs font-inter flex items-center gap-1.5"
